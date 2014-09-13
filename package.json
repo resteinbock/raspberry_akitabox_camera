@@ -4,7 +4,7 @@
     "main": "app.js",
     "private": "true",
     "dependencies": {
-        "express": "4.*",
+        "express": "3.*",
         "hjs": "*",
         "planvault_api_client":"git+ssh://git@github.com:schematical/planvault_api_client.git#master",
         "underscore":"*",
@@ -14,8 +14,5 @@
         "moment":"*",
         "colors":"*",
         "bower": "^1.3.3"
-    },
-    "scripts": {
-        //"postinstall": "node_modules/.bin/bower install"
     }
 }
