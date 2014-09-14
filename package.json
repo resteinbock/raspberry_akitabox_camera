@@ -6,7 +6,7 @@
     "dependencies": {
         "express": "3.*",
         "hjs": "*",
-        "planvault_api_client":"git+ssh://git@github.com:schematical/planvault_api_client.git#master",
+        "planvault_api_client":"git+ssh://git@github.com:planvault/planvault_api_client.git#master",
         "underscore":"*",
         "archiver":"*",
         "async":"*",
