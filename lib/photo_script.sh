@@ -7,3 +7,5 @@
 DATE=$(date +"%Y-%m-%d_%H%M")
 
 echo $DATE
+
+fswebcam /home/pi/Documents/raspberry_akitabox_camera/.tmp/photos/$DATE.jpg
