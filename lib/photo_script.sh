@@ -1,7 +1,9 @@
+#!/bin/bash
+
 #
 # script to take a picture
 #
 
-clear
+DATE=$(date +"%Y-%m-%d_%H%M")
 
-echo "Knowledge is Power"
+echo $DATE
