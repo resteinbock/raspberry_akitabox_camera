@@ -11,3 +11,4 @@ echo $DATE
 # fswebcam /home/pi/Documents/raspberry_akitabox_camera/.tmp/photos/$DATE.jpg
 
 raspistill -o /home/pi/Documents/raspberry_akitabox_camera/.tmp/photos/$DATE.jpg
+
