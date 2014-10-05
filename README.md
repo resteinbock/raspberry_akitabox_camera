@@ -4,8 +4,11 @@ raspberry_akitabox_camera
 Raspberry Pi camera with uploads to an AkitaBox project
 
 
-for standard usb webcams, be sure to run:
+For standard usb webcams, be sure to run:
 `sudo apt-get install fswebcam`
+
+For motion detection, be sure to run:
+`sudo apt-get install motion`
 
 ======================================================================
 to install node on raspberry pi:
