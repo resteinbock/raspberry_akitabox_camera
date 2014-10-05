@@ -30,3 +30,5 @@ npm -v
 ```
 ======================================================================
 
+Some details about running scripts on server startup:
+http://raspberrywebserver.com/serveradmin/run-a-script-on-start-up.html
