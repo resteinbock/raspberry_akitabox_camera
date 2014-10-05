@@ -29,6 +29,24 @@ restart the raspberry pi and run:
 npm -v
 ```
 ======================================================================
-
 Some details about running scripts on server startup:
 http://raspberrywebserver.com/serveradmin/run-a-script-on-start-up.html
+
+======================================================================
+Set up wifi from the terminal
+
+```
+sudo vim /etc/network/interfaces
+```
+
+Now add these lines at the end of the file (or change existing lines to match these):
+
+```
+allow-hotplug wlan0 
+iface wlan0 inet dhcp 
+wpa-ssid "YOUR NETWORK SSID"
+wpa-psk "WIFI PASSWORD"
+```
+
+Then reboot `sudo reboot`
+
