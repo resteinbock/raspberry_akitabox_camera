@@ -4,8 +4,11 @@ raspberry_akitabox_camera
 Raspberry Pi camera with uploads to an AkitaBox project
 
 
-for standard usb webcams, be sure to run:
+For standard usb webcams, be sure to run:
 `sudo apt-get install fswebcam`
+
+For motion detection, be sure to run:
+`sudo apt-get install motion`
 
 ======================================================================
 to install node on raspberry pi:
@@ -29,4 +32,24 @@ restart the raspberry pi and run:
 npm -v
 ```
 ======================================================================
+Some details about running scripts on server startup:
+http://raspberrywebserver.com/serveradmin/run-a-script-on-start-up.html
+
+======================================================================
+Set up wifi from the terminal
+
+```
+sudo vim /etc/network/interfaces
+```
+
+Now add these lines at the end of the file (or change existing lines to match these):
+
+```
+allow-hotplug wlan0 
+iface wlan0 inet dhcp 
+wpa-ssid "YOUR NETWORK SSID"
+wpa-psk "WIFI PASSWORD"
+```
+
+Then reboot `sudo reboot`
 
