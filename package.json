@@ -7,6 +7,7 @@
         "express": "3.*",
         "hjs": "*",
         "planvault_api_client":"git+ssh://git@github.com:planvault/planvault_api_client.git#master",
+        "planvault_app_tools": "git+ssh://git@github.com:planvault/planvault_app_tools.git#master",
         "underscore":"*",
         "archiver":"*",
         "async":"*",
