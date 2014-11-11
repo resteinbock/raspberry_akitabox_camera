@@ -12,3 +12,5 @@
 # PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # @reboot /usr/local/bin/forever start -al /home/pi/Documents/raspberry_akitabox_camera/logs/camera.log /home/pi/Documents/raspberry_akitabox_camera/app.js
 #
+# sudo vim /etc/rc.local
+# su pi -c 'forever start -al /home/pi/Documents/raspberry_akitabox_camera/logs/camera.log /home/pi/Documents/raspberry_akitabox_camera/app.js < /dev/null &'
