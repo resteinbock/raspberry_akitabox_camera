@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# restart the raspberry pi
+# restart the raspberry pi after checking for internet
 # reference:
 #   http://weworkweplay.com/play/rebooting-the-raspberry-pi-when-it-loses-wireless-connection-wifi/
 #   http://jeromejaglale.com/doc/unix/shell_scripts/ping

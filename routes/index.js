@@ -14,4 +14,9 @@ module.exports = function(app){
         res.send("attempting to update the code and restart....");
         app.sys_checks.updateCode(function(err){ /*...*/ });
     });
+
+    app.get('/restartrpi', function(req, res, next){
+        res.send("attempting to restart....");
+        app.sys_checks.updateCode(function(err){ /*...*/ });
+    })
 };
