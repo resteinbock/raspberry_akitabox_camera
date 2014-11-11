@@ -1,5 +1,6 @@
 #
 # not needed
+# set env="production"
 # added a task to crontab -e
 #
 #
