@@ -25,6 +25,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 routes(app);
 
+//404
+app.use(function(req, res, next){
+    res.status(404);
+
+    return res.json({ error: '404 Not found', uri: req.path })
+});
+
 app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port') );
     console.log('Referencing config file: ' + app.config.name);
