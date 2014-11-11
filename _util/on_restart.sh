@@ -3,6 +3,9 @@
 # set env="production"
 # added a task to crontab -e
 #
+# to update network
+# sudo vim /etc/network/interfaces
+#
 # sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 #
 # SHELL=/bin/sh
