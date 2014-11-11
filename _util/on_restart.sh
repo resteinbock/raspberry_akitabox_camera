@@ -3,6 +3,7 @@
 # set env="production"
 # added a task to crontab -e
 #
+# sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 #
 # SHELL=/bin/sh
 # PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
