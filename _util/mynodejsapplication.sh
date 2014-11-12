@@ -54,7 +54,7 @@ export env=production
 
 start() {
     echo "Starting $NAME"
-    /home/pi/node/node-v0.10.28-linux-arm-pi/bin/forever --pidFile $PIDFILE --sourceDir $APPLICATION_DIRECTORY \
+    /home/pi/node/node-v0.10.28-linux-arm-pi/bin/forever --sourceDir $APPLICATION_DIRECTORY \
         -a -l $LOGFILE --minUptime 5000 --spinSleepTime 2000 \
         start $APPLICATION_START &
     RETVAL=$?
@@ -63,7 +63,7 @@ start() {
 stop() {
     if [ -f $PIDFILE ]; then
         echo "Shutting down $NAME $PIDFILE"
-        rm -f $PIDFILE
+        forever stop $APPLICATION_START
         RETVAL=$?
     else
         echo "$NAME is not running."
