@@ -20,7 +20,7 @@
 # Reference: http://www.linuxfunda.com/2013/12/15/how-to-install-and-configure-forever-as-a-service-to-run-node-js-application-ubuntu-12-04/
 # put file at: /etc/init.d/mynodejsapplication.sh
 # using: sudo cp /home/pi/Documents/raspberry_akitabox_camera/_util/mynodejsapplication.sh /etc/init.d/mynodejsapplication.sh
-# command to make it run on startup: sudo update-rc.d mynodejsapplication defaults
+# command to make it run on startup: sudo update-rc.d mynodejsapplication.sh defaults
 
 # An application name to display in echo text.
 # An application name to display in echo text.
@@ -46,8 +46,11 @@ APPLICATION_START=app.js
 PIDFILE=/var/run/$NAME.pid
 LOGFILE=/home/pi/Documents/raspberry_akitabox_camera/logs/$NAME.log
 
+# If you want a command to always run, put it here
 PATH=$NODE_BIN_DIR:$PATH
 export NODE_PATH=$NODE_PATH
+export RPI_CONFIG=/home/pi/Documents/raspberry_akitabox_camera/lib/config_files/config.js
+export env=production
 
 start() {
     echo "Starting $NAME"
@@ -94,7 +97,7 @@ case "$1" in
         restart
         ;;
     *)
-        echo "Usage: {start|stop|status|restart}"
+        echo "Usage: /etc/init.d/mynodejsapplication.sh {start|stop|status|restart}"
         exit 1
         ;;
 esac
