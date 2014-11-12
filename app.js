@@ -17,6 +17,7 @@ console.log('process.env.ENV ' + process.env.env);
 
 app.use(express.cookieParser(app.config.cookie.secret));
 app.use(express.session());
+app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
