@@ -8,7 +8,10 @@ require('colors');
 var app = express();
 camera.configure(app);
 app.set('port', app.config.port.http || 3000);
-app.set('env', process.env.ENV || 'local');
+app.set('env', process.env.env || 'local');
+
+console.log('process.env.ENV ' + process.env.env);
+
 //app.set('views', path.join(__dirname, 'public/templates'));
 //app.set('view engine', 'hjs');
 
@@ -34,7 +37,7 @@ app.use(function(req, res, next){
 });
 
 app.listen(app.get('port'), function() {
-    console.log('Express server listening on port ' + app.get('port') );
+    console.log('Express server listening on port ' + app.get('port') + ' - ' + app.get('env'));
     console.log('Referencing config file: ' + app.config.name);
     console.log('Referencing local storage: ' + app.config.local_fs_path);
 
