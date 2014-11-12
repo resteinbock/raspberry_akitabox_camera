@@ -11,6 +11,7 @@
         "underscore":"*",
         "archiver":"*",
         "async":"*",
+        "request": "*",
         "hogan.js":"*",
         "moment":"*",
         "colors":"*"
