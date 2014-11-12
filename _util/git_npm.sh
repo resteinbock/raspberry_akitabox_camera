@@ -11,7 +11,7 @@ ssh-add /home/ubuntu/.ssh/id-rsa
 sudo -u pi git checkout $BRANCH
 sudo -u pi git pull origin $BRANCH --force
 echo "PULL COMPLETE, NPM INSTALL..."
-/home/pi/node/node-v0.10.28-linux-arm-pi/bin/npm install
+sudo -u pi /home/pi/node/node-v0.10.28-linux-arm-pi/bin/npm install
 
 echo "******** SETUP COMPLETE *********"
 echo "shutting down now..."
