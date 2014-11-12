@@ -19,7 +19,7 @@
 
 # Reference: http://www.linuxfunda.com/2013/12/15/how-to-install-and-configure-forever-as-a-service-to-run-node-js-application-ubuntu-12-04/
 # put file at: /etc/init.d/mynodejsapplication.sh
-# using: cp /home/pi/Documents/raspberry_akitabox_camera/_util/mynodejsapplication.sh /etc/init.d/mynodejsapplication.sh
+# using: sudo cp /home/pi/Documents/raspberry_akitabox_camera/_util/mynodejsapplication.sh /etc/init.d/mynodejsapplication.sh
 # command to make it run on startup: sudo update-rc.d mynodejsapplication defaults
 
 # An application name to display in echo text.
