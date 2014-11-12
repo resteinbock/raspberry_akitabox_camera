@@ -62,7 +62,7 @@ start() {
 
 stop() {
     if [ -f $PIDFILE ]; then
-        echo "Shutting down $NAME"
+        echo "Shutting down $NAME $PIDFILE"
         rm -f $PIDFILE
         RETVAL=$?
     else
