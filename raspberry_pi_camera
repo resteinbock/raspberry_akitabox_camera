@@ -12,7 +12,7 @@
 # initd a node app
 # Based on a script posted by https://gist.github.com/jinze at https://gist.github.com/3748766
 #
-# sudo cp /home/pi/Documents/raspberry_akitabox_camera/raspberry_pi_camera /etc/init/raspberry_pi_camera
+# sudo cp /home/pi/Documents/raspberry_akitabox_camera/raspberry_pi_camera /etc/init.d/raspberry_pi_camera
 # sudo update-rc.d raspberry_pi_camera defaults
 
 # Source function library.
