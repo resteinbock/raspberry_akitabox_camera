@@ -45,7 +45,9 @@ app.listen(app.get('port'), function() {
     var date = new Date();
     console.log('App started on date :: ' + date.toString());
 
-    app.ping_akitabot.pingOnStartup(function(err){ /*...*/ });
+    app.ping_akitabot.pingOnStartup(function(err){
+        console.log('sent ping');
+    });
 });
 
 camera.start(true);
