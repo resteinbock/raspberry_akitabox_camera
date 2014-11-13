@@ -33,7 +33,7 @@ start() {
    # Launching forever with a full path
    # does not work unless we set the PATH.
    
-   PATH=/usr/local/bin:$PATH
+   PATH=/home/pi/node/node-v0.10.28-linux-arm-pi/bin:/usr/local/bin:$PATH
    export NODE_ENV=production
    export RPI_CONFIG=/home/pi/Documents/raspberry_akitabox_camera/lib/config_files/config.js
 
