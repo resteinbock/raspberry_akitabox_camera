@@ -78,9 +78,6 @@ case "$1" in
     stop)
         stop
         ;;
-    status)
-        status
-        ;;
     restart)
         restart
         ;;
