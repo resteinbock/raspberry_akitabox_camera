@@ -26,8 +26,8 @@ nodeApp="/home/pi/Documents/raspberry_akitabox_camera/app.js"
 foreverApp="/home/pi/node/node-v0.10.28-linux-arm-pi/bin/forever"
 
 start() {
-   echo "Starting $nodeApp"
-
+   echo "\nStarting $nodeApp "
+   whoami
    # Notice that we change the PATH because on reboot
    # the PATH does not include the path to node.
    # Launching forever with a full path
