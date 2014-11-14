@@ -91,8 +91,7 @@ module.exports = _routes = {
 
             //default to the first revision in the commit
             var url = app.config.doci_url + path.join('/raw', commit.project, '/docs', commit.revisions[0].document);
-            console.log('redirecting to: ' + url);
-            return res.redirect(url);
+            res.send(url);
         });
 
         app.post('/updatecode', function (req, res, next) {
