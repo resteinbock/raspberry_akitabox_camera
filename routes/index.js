@@ -13,9 +13,11 @@ module.exports = _routes = {
             }
 
             //request was a POST, so verify the secret in the body
-            if (!req.body || !req.body.secret || req.body.secret !== app.config.camera.secret) {
+            if (!req.body || !req.body.secret || req.body.secret !== _routes.app.config.camera.secret) {
                 return _routes.app.standard_helpers.akitaError('Unauthorized', 401, next);
             }
+
+            return next();
         }
     },
 
@@ -28,7 +30,6 @@ module.exports = _routes = {
             if (app.camera.time_lapse_interval_min === null) {
                 return res.send('Time lapse has already been stopped');
             }
-
             app.camera.time_lapse_interval_min = null;
             return res.send('Time lapse will stop after the next pic...');
         });
@@ -48,12 +49,19 @@ module.exports = _routes = {
                 return res.send('Time lapse is not on');
             }
 
-            if (!req.body || !req.body.interval_min || typeof req.body.interval_min !== 'number') {
-                return _routes.app.standard_helpers.akitaError('Bad request', 400, next);
+            if (!req.body || typeof req.body.interval_min !== 'string') {
+                return app.standard_helpers.akitaError('Bad request', 400, next);
             }
 
-            app.camera.time_lapse_interval_min = req.body.interval_min;
-            res.send('Interval will be updated to ' + app.camera.time_lapse_interval_min + ' min after the next pic is taken...');
+            var new_interval_min = parseInt(req.body.interval_min, 10);
+
+            //make sure the new time is greater than the min
+            if(new_interval_min < parseInt(app.config.camera.min_photo_interval, 10)) {
+                return app.standard_helpers.akitaError('interval_min too short ' + new_interval_min, 500, next);
+            }
+
+            app.camera.time_lapse_interval_min = new_interval_min;
+            res.send('Interval will be updated to ' + new_interval_min + ' min after the next pic is taken...');
         });
 
         app.post('/takepic', function (req, res, next) {

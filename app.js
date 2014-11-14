@@ -1,5 +1,6 @@
 process.chdir(__dirname);
 var express = require('express');
+var http = require('http');
 require('colors');
 
 var app = express();
