@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# script to take a picture
+# script to take a picture using rpi camera module
 #
 
 DATE=$(date +"%Y-%m-%d_%H%M_%S")
