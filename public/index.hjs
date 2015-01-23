@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>AkitaBox RPi Camera</title>
+        <meta name="description" content="AkitaBox RPi Camera">
+        <meta name="author" content="resteinbock">
+        <meta http-equiv="Cache-control" content="no-cache">
+    </head>
+    <body>
+        <!-- project -->
+        <h1>{{ project }}</h1>
+        <!-- date -->
+        <p>{{ date }}</p>
+        <!-- image -->
+        <img src="{{ url }}">
+    </body>
+</html>

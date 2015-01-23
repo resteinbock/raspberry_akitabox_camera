@@ -1,6 +1,7 @@
 process.chdir(__dirname);
 var express = require('express');
 var http = require('http');
+var path = require('path');
 require('colors');
 
 var app = express();
@@ -10,22 +11,11 @@ app.camera.configure(app);
 
 app.set('port', app.config.port || 3000);
 app.set('env', process.env.ENV || 'local');
+app.set('views', path.join(__dirname, 'public'));
+app.set('view engine', 'hjs');
 
-//app.set('views', path.join(__dirname, 'public/templates'));
-//app.set('view engine', 'hjs');
-
-//app.use(express.cookieParser(app.config.cookie.secret));
-//app.use(express.session());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
-//app.use(express.static(path.join(__dirname, 'public')));
-
-//app.locals.api_protocol = app.config.api_protocol;
-//app.locals.api_server = app.config.api_server;
-//app.locals.partials = {
-//    _header:'_header',
-//    _footer:'_footer'
-//};
 
 //Heartbeat middleware
 app.use( app.standard_middleware.heartbeat() );

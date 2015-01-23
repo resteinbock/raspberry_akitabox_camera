@@ -76,22 +76,38 @@ module.exports = _routes = {
             });
         });
 
-        app.post('/showlastpic', function (req, res, next) {
+        app.get('/showlastpic', function (req, res, next) {
             //use the doci to show the last pic referencing the last commit
             var commit = app.camera.last_commit;
+
+            //for local testing
+            /*commit = {
+                project: _routes.app.config.project.uri,
+                revisions: [
+                    {
+                        document: '5464fa4768746dea2a16942f'
+                    }
+                ],
+                cre_date_display: '11/13/2014 12:36 PM'
+            };*/
 
             if (!commit){
                 return res.send('Must take a photo before it can be viewed');
             }
 
 
-            if (!commit.project || !commit.revisions || !commit.revisions[0] || !commit.revisions[0].document){
+            if (!commit.project || !commit.revisions || !commit.revisions[0] || !commit.revisions[0].document || !commit.cre_date_display){
                 return app.standard_helpers.akitaError('Invalid commit', 500, next);
             }
 
             //default to the first revision in the commit
-            var url = app.config.doci_url + path.join('/raw', commit.project, '/docs', commit.revisions[0].document);
-            res.send(url);
+            var locals = {
+                project: commit.project,
+                date: commit.cre_date_display,
+                url: app.config.doci_url + path.join('/raw', commit.project, '/docs', commit.revisions[0].document)
+            };
+
+            res.render('index', locals);
         });
 
         app.post('/updatecode', function (req, res, next) {
