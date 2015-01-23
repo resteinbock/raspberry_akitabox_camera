@@ -32,7 +32,7 @@ app.use( app.standard_middleware.prodErrorHandler() );
 //Start the server
 http.createServer(app).listen(app.get('port'), function() {
     //run ifconfig so that it will be posted to campfire
-    var script = './_util/ifconfig.sh';
+    var script = path.join(__dirname, '_util/ifconfig.sh');
     app.sys_checks.runScript(script, function(err){
         //dont do anything with the error
         app.standard_middleware.onServerCreate();
