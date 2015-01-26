@@ -12,6 +12,7 @@
         <h1>{{ project }}</h1>
         <!-- date -->
         <p>{{ date }}</p>
+        <a href="{{ display_url }}">Save the link</a>
         <!-- image -->
         <img src="{{ url }}">
     </body>
