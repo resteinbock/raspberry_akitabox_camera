@@ -1,0 +1,19 @@
+{
+  "name": "rpi_camera",
+  "version": "0.1.0",
+  "homepage": "htts://akitabox.ddns.com",
+  "authors": [
+    "Robbie Steinbock <resteinbock@gmail.com>"
+  ],
+  "main": "app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tmp"
+  ],
+  "dependencies": {
+    "bootstrap": "*"
+  }
+}

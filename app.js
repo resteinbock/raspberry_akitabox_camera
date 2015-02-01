@@ -11,7 +11,7 @@ app.camera.configure(app);
 
 app.set('port', app.config.port || 3000);
 app.set('env', process.env.ENV || 'local');
-app.set('views', path.join(__dirname, 'public'));
+app.set('views', path.join(__dirname, 'public/templates'));
 app.set('view engine', 'hjs');
 
 app.use(express.logger('dev'));

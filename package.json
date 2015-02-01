@@ -16,5 +16,8 @@
         "moment":"*",
         "hogan.js": "*",
         "colors":"*"
+    },
+    "scripts": {
+        "postinstall": "node_modules/.bin/bower install"
     }
 }
