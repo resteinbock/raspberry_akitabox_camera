@@ -97,12 +97,11 @@ module.exports = _routes = {
             }
 
             //default to the first revision in the commit
-            //TODO: replace the domain below with _camera.app.config.domain when it works
             var locals = {
                 project: commit.project,
                 date: commit.cre_date_display,
                 url: app.config.doci_url + path.join('/raw', app.config.project.uri, '/docs', commit.revisions[0].document),
-                display_url: 'http://192.168.1.69:8080/showpic/' + req.document
+                display_url: app.config.domain + '/showpic/' + req.document
             };
 
             res.render('index', locals);
@@ -110,12 +109,11 @@ module.exports = _routes = {
 
         app.get('/showpic/:document', function(req, res, next) {
 
-            //TODO: replace the domain below with _camera.app.config.domain when it works
             var locals = {
                 project:  app.config.project.uri,
                 date: 'need to fetch this',
                 url: app.config.doci_url + path.join('/raw', app.config.project.uri, '/docs', req.document),
-                display_url: 'http://192.168.1.69:8080/showpic/' + req.document
+                display_url: app.config.domain + '/showpic/' + req.document
             };
 
             res.render('index', locals);
