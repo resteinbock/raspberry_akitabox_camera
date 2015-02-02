@@ -1,4 +1,6 @@
 var path = require('path');
+var async = require('async');
+var _ = require('underscore');
 
 module.exports = _routes = {
     configure:function(app){
@@ -30,7 +32,74 @@ module.exports = _routes = {
 
     router: function(app) {
         app.get('/', function (req, res, next) {
-            return res.send("Raspberry Pi Camera App Running....");
+
+            //get the most recent documents
+            var uri = _routes.app.config.project.uri + '/docs?tags_' + _routes.app.config.tag.name + '=' + _routes.app.config.tag.value;
+            _routes.app.pv_client.get(uri, {}, function(err, _documents){
+                if (err) return next(err);
+
+                //group the documents by the day they were last modified
+                var grouped_docs = _.groupBy(_documents, function(document){
+                    var date = new Date(document.last_mod_date);
+
+                    //return a string of numbers in yyyymmdd format so that sorting works correctly
+                    var day = date.getDate();
+                    if (day<10) day = '0' + day;
+
+                    var month = date.getMonth() + 1;
+                    if (month<10) month = '0' + month;
+
+                    return date.getFullYear().toString() + month.toString() + day.toString();
+                });
+
+                //get an array of the group_by object keys
+                var keys = _.keys(grouped_docs);
+
+                //use numeric sorting
+                keys = _.sortBy(keys, function(num) { return parseInt(num,10); });
+
+                //reverse the list
+                keys = keys.reverse();
+
+                //make a new object in the sorted keys order
+                var sorted_grouped_docs = {};
+                var limit = 100;
+                if (keys.length < limit) {
+                    limit = keys.length;
+                }
+                for (var j = 0; j < limit; j++){
+                    //the key in this case is document.last_mod_date in yyyymmdd format so we need to make it a user friendly format
+                    var date = parseInt(keys[j].slice(4,6),10) + '/' + parseInt(keys[j].slice(6,8),10) + '/' + keys[j].slice(0,4);
+                    sorted_grouped_docs[date] = grouped_docs[keys[j]];
+                }
+                grouped_docs = sorted_grouped_docs;
+
+                //cycle through each group and prepare the locals for each group
+                var grouped_docs_obj = [];
+                var first = true;
+                for(var i in grouped_docs) {
+                    var safe_name = i;
+                    //replace all of the characters that prevent the groups from collapsing in the files list
+                    safe_name = safe_name.replace(/[=[\]{}()`*#~+!@%&?<>.,^$|\/\\\s]/g, "_");
+
+                    grouped_docs_obj.push({
+                        name: i,
+                        safe_name: safe_name,
+                        count: grouped_docs[i].length,
+                        documents: grouped_docs[i],
+                        first: first
+                    });
+                    first = false;
+                }
+                grouped_docs = grouped_docs_obj;
+
+                var locals = {
+                    grouped_docs: grouped_docs,
+                    group_names: _.keys(grouped_docs)
+                };
+
+                return res.render('index', locals);
+            });
         });
 
         app.post('/stoptimelapse', function (req, res, next) {
@@ -104,7 +173,7 @@ module.exports = _routes = {
                 display_url: app.config.domain + '/showpic/' + req.document
             };
 
-            res.render('index', locals);
+            return res.render('last_pic', locals);
         });
 
         app.get('/showpic/:document', function(req, res, next) {
