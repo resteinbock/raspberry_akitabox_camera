@@ -14,6 +14,12 @@
     "tmp"
   ],
   "dependencies": {
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "backbone": "*",
+    "hogan": "*",
+    "jquery": "*",
+    "requirejs": "*",
+    "underscore": "*",
+    "requirejs-text": "*"
   }
 }

@@ -34,71 +34,40 @@ module.exports = _routes = {
         app.get('/', function (req, res, next) {
 
             //get the most recent documents
-            var uri = _routes.app.config.project.uri + '/docs?tags_' + _routes.app.config.tag.name + '=' + _routes.app.config.tag.value;
+            var uri = _routes.app.config.project.uri + '/docs';
+            uri += '?tags_' + _routes.app.config.tag.name + '=' + _routes.app.config.tag.value;
+            uri += '&page=1';
+            uri += '&per_page=100';
+            uri += '&group_by=date';
+            uri += '&sort_by=last_mod_date%2Cdesc';
+            console.log(uri);
+
             _routes.app.pv_client.get(uri, {}, function(err, _documents){
                 if (err) return next(err);
 
-                //group the documents by the day they were last modified
-                var grouped_docs = _.groupBy(_documents, function(document){
-                    var date = new Date(document.last_mod_date);
+                var grouped_documents = [];
+                var temp_groups = _.groupBy(_documents, 'group_alias');
+                var group_aliases = _.keys(temp_groups);
 
-                    //return a string of numbers in yyyymmdd format so that sorting works correctly
-                    var day = date.getDate();
-                    if (day<10) day = '0' + day;
+                _.each(group_aliases, function(group_alias){
+                    //everything should already be in the correct order
+                    var group_name = group_alias.replace(/[=[\]{}()`*#~+!@%&?<>.,^$|\/\\\s]/g, "_");
+                    var tmp_docs = temp_groups[group_alias];
+                    for (var i=0; i<tmp_docs.length; i++) {
+                        tmp_docs[i].is_first = (i === 0);
+                        tmp_docs[i].counter = i;
+                    }
 
-                    var month = date.getMonth() + 1;
-                    if (month<10) month = '0' + month;
-
-                    return date.getFullYear().toString() + month.toString() + day.toString();
+                    grouped_documents.push({
+                        div_group_id: 'div-group-' + group_name,
+                        group_alias: group_alias,
+                        group_name: group_name,
+                        documents: tmp_docs,
+                        count: temp_groups[group_alias].length
+                    });
                 });
 
-                //get an array of the group_by object keys
-                var keys = _.keys(grouped_docs);
-
-                //use numeric sorting
-                keys = _.sortBy(keys, function(num) { return parseInt(num,10); });
-
-                //reverse the list
-                keys = keys.reverse();
-
-                //make a new object in the sorted keys order
-                var sorted_grouped_docs = {};
-                var limit = 100;
-                if (keys.length < limit) {
-                    limit = keys.length;
-                }
-                for (var j = 0; j < limit; j++){
-                    //the key in this case is document.last_mod_date in yyyymmdd format so we need to make it a user friendly format
-                    var date = parseInt(keys[j].slice(4,6),10) + '/' + parseInt(keys[j].slice(6,8),10) + '/' + keys[j].slice(0,4);
-                    sorted_grouped_docs[date] = grouped_docs[keys[j]];
-                }
-                grouped_docs = sorted_grouped_docs;
-
-                //cycle through each group and prepare the locals for each group
-                var grouped_docs_obj = [];
-                var first = true;
-                for(var i in grouped_docs) {
-                    var safe_name = i;
-                    //replace all of the characters that prevent the groups from collapsing in the files list
-                    safe_name = safe_name.replace(/[=[\]{}()`*#~+!@%&?<>.,^$|\/\\\s]/g, "_");
-
-                    grouped_docs_obj.push({
-                        name: i,
-                        safe_name: safe_name,
-                        count: grouped_docs[i].length,
-                        documents: grouped_docs[i],
-                        first: first
-                    });
-                    first = false;
-                }
-                grouped_docs = grouped_docs_obj;
-
-                var locals = {
-                    grouped_docs: grouped_docs,
-                    group_names: _.keys(grouped_docs)
-                };
-
-                return res.render('index', locals);
+                return res.render('index', {documents: grouped_documents[0].documents});
             });
         });
 

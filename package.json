@@ -13,8 +13,8 @@
         "async":"*",
         "request": "*",
         "hogan.js":"*",
+        "bower": "*",
         "moment":"*",
-        "hogan.js": "*",
         "colors":"*"
     },
     "scripts": {
