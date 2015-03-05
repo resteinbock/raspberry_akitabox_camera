@@ -48,6 +48,7 @@ module.exports = _routes = {
                 var grouped_documents = [];
                 var temp_groups = _.groupBy(_documents, 'group_alias');
                 var group_aliases = _.keys(temp_groups);
+                var first = true;
 
                 _.each(group_aliases, function(group_alias){
                     //everything should already be in the correct order
@@ -63,11 +64,20 @@ module.exports = _routes = {
                         group_alias: group_alias,
                         group_name: group_name,
                         documents: tmp_docs,
-                        count: temp_groups[group_alias].length
+                        count: temp_groups[group_alias].length,
+                        first: first
                     });
+
+                    first = false;
                 });
 
-                return res.render('index', {documents: grouped_documents[0].documents});
+                var locals = {
+                    grouped_documents: grouped_documents,
+                    project_name: 'AkitaBox Raspberry Pi Camera',
+                    camera_tag: _routes.app.config.tag.name + ': ' +  _routes.app.config.tag.value
+                };
+
+                return res.render('index', locals);
             });
         });
 

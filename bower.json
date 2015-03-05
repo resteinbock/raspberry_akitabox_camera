@@ -15,11 +15,6 @@
   ],
   "dependencies": {
     "bootstrap": "*",
-    "backbone": "*",
-    "hogan": "*",
-    "jquery": "*",
-    "requirejs": "*",
-    "underscore": "*",
-    "requirejs-text": "*"
+    "jquery": "*"
   }
 }
