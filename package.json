@@ -13,8 +13,11 @@
         "async":"*",
         "request": "*",
         "hogan.js":"*",
+        "bower": "*",
         "moment":"*",
-        "hogan.js": "*",
         "colors":"*"
+    },
+    "scripts": {
+        "postinstall": "node_modules/.bin/bower install"
     }
 }

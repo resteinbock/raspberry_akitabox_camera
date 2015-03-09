@@ -11,11 +11,12 @@ app.camera.configure(app);
 
 app.set('port', app.config.port || 3000);
 app.set('env', process.env.ENV || 'local');
-app.set('views', path.join(__dirname, 'public'));
+app.set('views', path.join(__dirname, 'public/templates'));
 app.set('view engine', 'hjs');
 
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Heartbeat middleware
 app.use( app.standard_middleware.heartbeat() );
@@ -39,4 +40,4 @@ http.createServer(app).listen(app.get('port'), function() {
     });
 });
 
-app.camera.start(true);
+app.camera.start(false);

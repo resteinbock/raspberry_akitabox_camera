@@ -1,4 +1,6 @@
 var path = require('path');
+var async = require('async');
+var _ = require('underscore');
 
 module.exports = _routes = {
     configure:function(app){
@@ -30,7 +32,53 @@ module.exports = _routes = {
 
     router: function(app) {
         app.get('/', function (req, res, next) {
-            return res.send("Raspberry Pi Camera App Running....");
+
+            //get the most recent documents
+            var uri = _routes.app.config.project.uri + '/docs';
+            uri += '?tags_' + _routes.app.config.tag.name + '=' + _routes.app.config.tag.value;
+            uri += '&page=1';
+            uri += '&per_page=100';
+            uri += '&group_by=date';
+            uri += '&sort_by=last_mod_date%2Cdesc';
+            console.log(uri);
+
+            _routes.app.pv_client.get(uri, {}, function(err, _documents){
+                if (err) return next(err);
+
+                var grouped_documents = [];
+                var temp_groups = _.groupBy(_documents, 'group_alias');
+                var group_aliases = _.keys(temp_groups);
+                var first = true;
+
+                _.each(group_aliases, function(group_alias){
+                    //everything should already be in the correct order
+                    var group_name = group_alias.replace(/[=[\]{}()`*#~+!@%&?<>.,^$|\/\\\s]/g, "_");
+                    var tmp_docs = temp_groups[group_alias];
+                    for (var i=0; i<tmp_docs.length; i++) {
+                        tmp_docs[i].is_first = (i === 0);
+                        tmp_docs[i].counter = i;
+                    }
+
+                    grouped_documents.push({
+                        div_group_id: 'div-group-' + group_name,
+                        group_alias: group_alias,
+                        group_name: group_name,
+                        documents: tmp_docs,
+                        count: temp_groups[group_alias].length,
+                        first: first
+                    });
+
+                    first = false;
+                });
+
+                var locals = {
+                    grouped_documents: grouped_documents,
+                    project_name: 'AkitaBox Raspberry Pi Camera',
+                    camera_tag: _routes.app.config.tag.name + ': ' +  _routes.app.config.tag.value
+                };
+
+                return res.render('index', locals);
+            });
         });
 
         app.post('/stoptimelapse', function (req, res, next) {
@@ -104,7 +152,7 @@ module.exports = _routes = {
                 display_url: app.config.domain + '/showpic/' + req.document
             };
 
-            res.render('index', locals);
+            return res.render('last_pic', locals);
         });
 
         app.get('/showpic/:document', function(req, res, next) {
