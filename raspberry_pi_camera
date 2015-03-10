@@ -21,9 +21,9 @@
 pidFile="/var/run/raspberry_pi_camera.pid"
 logFile="/home/pi/Documents/raspberry_akitabox_camera/logs/camera.log"
 
-command="/home/pi/node/node-v0.10.28-linux-arm-pi/bin/node"
+command="/usr/local/bin/node"
 nodeApp="/home/pi/Documents/raspberry_akitabox_camera/app.js"
-foreverApp="/home/pi/node/node-v0.10.28-linux-arm-pi/bin/forever"
+foreverApp="/usr/local/bin/forever"
 
 start() {
    echo "\nStarting $nodeApp "
@@ -33,9 +33,9 @@ start() {
    # Launching forever with a full path
    # does not work unless we set the PATH.
    
-   PATH=/home/pi/node/node-v0.10.28-linux-arm-pi/bin:/usr/local/bin:$PATH
+   PATH=/usr/local/bin:$PATH
    export ENV=production
-   export RPI_CONFIG=/home/pi/Documents/raspberry_akitabox_camera/lib/config_files/config.js
+   export RPI_CONFIG=/home/pi/Documents/raspberry_akitabox_camera/lib/config_files/config_akita_camera.js
 
    #PORT=80
    
@@ -45,14 +45,14 @@ start() {
 
 restart() {
    echo -n "Restarting $nodeApp"
-   PATH=/home/pi/node/node-v0.10.28-linux-arm-pi/bin:/usr/local/bin:$PATH
+   PATH=/usr/local/bin:$PATH
    $foreverApp restart $nodeApp
    RETVAL=$?
 }
 
 stop() {
    echo -n "Shutting down $nodeApp"
-   PATH=/home/pi/node/node-v0.10.28-linux-arm-pi/bin:/usr/local/bin:$PATH
+   PATH=/usr/local/bin:$PATH
    $foreverApp stop $nodeApp
    RETVAL=$?
 }

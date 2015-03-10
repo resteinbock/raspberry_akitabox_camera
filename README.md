@@ -11,45 +11,42 @@ For motion detection, be sure to run:
 `sudo apt-get install motion`
 
 ======================================================================
-to install node on raspberry pi:
-```
-sudo apt-get update
-sudo apt-get upgrade
-wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-arm-pi.tar.gz
-tar -zxvf node-v0.10.28-linux-arm-pi.tar.gz
-node-v010.28-linux-arm-pi/bin/node —v
-```
-
-add the following two lines to the .bash_profile (make sure the path is where you installed node):
-```
-PATH=”/home/pi/node-v0.10.28-linux-arm-pi/bin:${PATH}”
-export PATH
-```
-
-restart the raspberry pi and run:
-```
-/bin/bash
-npm -v
-```
-======================================================================
 Some details about running scripts on server startup:
+
 http://raspberrywebserver.com/serveradmin/run-a-script-on-start-up.html
 
 ======================================================================
-Set up wifi from the terminal
+Set up wifi and static ip from the terminal
 
-```
-sudo vim /etc/network/interfaces
-```
+http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/
 
-Now add these lines at the end of the file (or change existing lines to match these):
+======================================================================
+Some details about no-ip:
 
-```
-allow-hotplug wlan0 
-iface wlan0 inet dhcp 
-wpa-ssid "YOUR NETWORK SSID"
-wpa-psk "WIFI PASSWORD"
-```
+http://raspberrypihelp.net/tutorials/29-raspberry-pi-no-ip-tutorial
 
-Then reboot `sudo reboot`
+======================================================================
+
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install vim
+sudo apt-get install git
+git config --global user.name "YOUR NAME"
+git config --global user.email "YOUR EMAIL ADDRESS"
+ssh-keygen -t rsa -C "your_email@example.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+copy the rsa key
+ssh -T git@github.com
+wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+sudo dpkg -i node_latest_armhf.deb
+sudo chown -R $USER:$GROUP ~/.npm
+sudo chown -R $USER:$GROUP /usr/local/lib/node_modules/
+sudo npm install -g bower
+sudo npm install -g forever
+git clone git@github.com:resteinbock/raspberry_akitabox_camera.git
+static ip
+no-ip
+on startup
 
