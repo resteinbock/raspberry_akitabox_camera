@@ -53,4 +53,5 @@ git clone git@github.com:resteinbock/raspberry_akitabox_camera.git
 static ip
 no-ip
 on startup
+npm install
 
