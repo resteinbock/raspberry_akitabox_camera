@@ -5,24 +5,24 @@
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: forever running /home/pi/Documents/raspberry_akitabox_camera/app.js
+# Short-Description: forever running /home/pi/raspberry_akitabox_camera/app.js
 # Description:       /home/pi/Documents/raspberry_akitabox_camera/app.js
 ### END INIT INFO
 #
 # initd a node app
 # Based on a script posted by https://gist.github.com/jinze at https://gist.github.com/3748766
 #
-# sudo cp /home/pi/Documents/raspberry_akitabox_camera/raspberry_pi_camera /etc/init.d/raspberry_pi_camera
+# sudo cp /home/pi/raspberry_akitabox_camera/raspberry_pi_camera /etc/init.d/raspberry_pi_camera
 # sudo update-rc.d raspberry_pi_camera defaults
 
 # Source function library.
 . /lib/lsb/init-functions
 
 pidFile="/var/run/raspberry_pi_camera.pid"
-logFile="/home/pi/Documents/raspberry_akitabox_camera/logs/camera.log"
+logFile="/home/pi/raspberry_akitabox_camera/logs/camera.log"
 
 command="/usr/local/bin/node"
-nodeApp="/home/pi/Documents/raspberry_akitabox_camera/app.js"
+nodeApp="/home/pi/raspberry_akitabox_camera/app.js"
 foreverApp="/usr/local/bin/forever"
 
 start() {
@@ -35,7 +35,7 @@ start() {
    
    PATH=/usr/local/bin:$PATH
    export ENV=production
-   export RPI_CONFIG=/home/pi/Documents/raspberry_akitabox_camera/lib/config_files/config_akita_camera.js
+   export RPI_CONFIG=/home/pi/raspberry_akitabox_camera/lib/config_files/config_akita_camera.js
 
    #PORT=80
    
