@@ -9,7 +9,7 @@ DATE=$(date +"%Y-%m-%d_%H%M_%S")
 echo "rpi camera"
 echo $DATE
 
-# fswebcam /home/pi/Documents/raspberry_akitabox_camera/tmp/photos/$DATE.jpg
+# fswebcam /home/pi/raspberry_akitabox_camera/tmp/photos/$DATE.jpg
 
 raspistill -o /home/pi/raspberry_akitabox_camera/tmp/photos/$DATE.jpg
 
