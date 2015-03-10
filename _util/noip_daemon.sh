@@ -13,7 +13,7 @@
 
 # Reference: http://www.stuffaboutcode.com/2012/06/raspberry-pi-run-program-at-start-up.html
 # put file at: /etc/init.d/noip_daemon.sh
-# using: cp /home/pi/Documents/raspberry_akitabox_camera/_util/noip_daemon.sh /etc/init.d/noip_daemon.sh
+# using: sudo cp /home/pi/raspberry_akitabox_camera/_util/noip_daemon.sh /etc/init.d/noip_daemon.sh
 # command to make it run on startup: sudo update-rc.d noip_daemon.sh defaults
 
 # If you want a command to always run, put it here

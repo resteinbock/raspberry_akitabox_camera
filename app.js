@@ -40,4 +40,4 @@ http.createServer(app).listen(app.get('port'), function() {
     });
 });
 
-app.camera.start(false);
+app.camera.start(true);
