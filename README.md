@@ -20,6 +20,10 @@ Set up wifi and static ip from the terminal
 
 http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/
 
+for changes to wifi access:
+/etc/network/interfaces
+/etc/wpa_supplicant/wpa_supplicant.conf
+
 ======================================================================
 Some details about no-ip:
 
