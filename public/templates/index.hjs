@@ -6,7 +6,6 @@
     <title>AkitaBox RPi Camera</title>
     <meta name="description" content="AkitaBox RPi Camera">
     <meta name="author" content="resteinbock">
-    <meta http-equiv="Cache-control" content="no-cache">
     <link rel="shortcut icon" href="/img/favicon.png">
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
