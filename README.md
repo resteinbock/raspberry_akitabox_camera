@@ -19,6 +19,7 @@ http://raspberrywebserver.com/serveradmin/run-a-script-on-start-up.html
 Set up wifi and static ip from the terminal
 
 http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/
+http://www.modmypi.com/blog/tutorial-how-to-give-your-raspberry-pi-a-static-ip-address
 
 for changes to wifi access:
 /etc/network/interfaces
