@@ -20,6 +20,7 @@ app.use( app.standard_middleware.heartbeat() );
 app.use(express.bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.logger('dev'));
+app.use(express.cookieParser(app.config.cookie.secret));
 
 app.use(function(req, res, next) {
     //enable CORS
@@ -39,7 +40,7 @@ app.use(function(req, res, next) {
     return next();
 });
 
-app.use( app.routes.middleware() );
+app.use( app.routes.middleware );
 app.routes.router(app);
 
 //404 middleware (after all routes, but before the error handler)

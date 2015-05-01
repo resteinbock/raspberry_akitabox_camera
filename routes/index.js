@@ -14,20 +14,32 @@ module.exports = _routes = {
         _routes.app = app;
     },
 
-    middleware: function(){
-        return function(req, res, next){
-            //check the secret if the method was a POST
-            if (req.method !== "POST"){
-                //request was not a POST
-                return next();
-            }
+    middleware: function(req, res, next){
+        var str_access_token = null;
+        if(req.signedCookies && req.signedCookies.access_token) {
+            //found the access token in a signed cookie
+            str_access_token = req.signedCookies.access_token;
+        } else if (req.get('x-access-token')) {
+            str_access_token = req.get('x-access-token');
+        } else if (req.query.access_token) {
+            str_access_token = req.query.access_token;
+        }
 
-            //request was a POST, so verify the secret in the body
-            if (!req.body || !req.body.secret || req.body.secret !== _routes.app.config.camera.secret) {
-                return _routes.app.standard_helpers.akitaError('Unauthorized', 401, next);
-            }
-
+        //TODO make this work...
+        if (!str_access_token) {
+            //there is a user logged in, so carry on
             return next();
+        }
+
+        if (req.method === 'GET') {
+            //method was a get, so redirect to login
+            return res.redirect(_routes.app.config.core.url + '?redirect_url=' + _routes.app.config.domain);
+
+        } else {
+            //just return a 401
+            var error = new Error('Unauthorized');
+            error.status = 401;
+            return next(error);
         }
     },
 
@@ -75,9 +87,10 @@ module.exports = _routes = {
                 });
 
                 var locals = {
+                    core_url: _routes.app.config.core.url,
                     grouped_documents: grouped_documents,
                     project_name: _routes.app.config.project.name,
-                    project_url: _routes.app.config.project.project_url,
+                    project_uri: _routes.app.config.project.uri,
                     camera_tag: _routes.app.config.tag.name + ': ' +  _routes.app.config.tag.value
                 };
 
@@ -133,42 +146,6 @@ module.exports = _routes = {
 
                 return;
             });
-        });
-
-        app.get('/showlastpic', function (req, res, next) {
-            //use the doci to show the last pic referencing the last commit
-            var commit = app.camera.last_commit;
-
-            if (!commit){
-                return res.send('Must take a photo before it can be viewed');
-            }
-
-
-            if (!commit.revisions || !commit.revisions[0] || !commit.revisions[0].document || !commit.cre_date_display){
-                return app.standard_helpers.akitaError('Invalid commit', 500, next);
-            }
-
-            //default to the first revision in the commit
-            var locals = {
-                project: commit.project,
-                date: commit.cre_date_display,
-                url: app.config.doci_url + path.join('/raw', app.config.project.uri, '/docs', commit.revisions[0].document),
-                display_url: app.config.domain + '/showpic/' + req.document
-            };
-
-            return res.render('last_pic', locals);
-        });
-
-        app.get('/showpic/:document', function(req, res, next) {
-
-            var locals = {
-                project:  app.config.project.uri,
-                date: 'need to fetch this',
-                url: app.config.doci_url + path.join('/raw', app.config.project.uri, '/docs', req.document),
-                display_url: app.config.domain + '/showpic/' + req.document
-            };
-
-            res.render('index', locals);
         });
 
         app.post('/updatecode', function (req, res, next) {

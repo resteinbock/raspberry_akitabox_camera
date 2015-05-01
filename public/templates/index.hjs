@@ -20,11 +20,11 @@
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="//akitabox.com">AkitaBox</a>
+                <a class="navbar-brand" href="{{core_url}}">AkitaBox</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="//{{project_url}}"><strong>{{project_name}} - </strong>{{camera_tag}}</a></li>
+                    <li class="active"><a href="{{core_url}}{{project_uri}}"><strong>{{project_name}} - </strong>{{camera_tag}}</a></li>
                 </ul>
             </div>
         </div>
