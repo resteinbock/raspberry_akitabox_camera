@@ -46,13 +46,6 @@ module.exports = _routes = {
             _routes.app.pv_client.get(uri, {}, function(err, _documents){
                 if (err) return next(err);
 
-                //add in the doci local for each document
-                // /doci/raw/:account/:project/docs/:document/revisions/:commit/page/:page
-                var dociHost = _routes.app.config.host ? _routes.app.config.host : _routes.app.config.domain;
-                _.each(_documents, function(document){
-                    document.doci_redirect = dociHost + document.last_binary_commit_uri + '/page/1';
-                });
-
                 //group the documents
                 var grouped_documents = [];
                 var temp_groups = _.groupBy(_documents, 'group_alias');
@@ -89,28 +82,6 @@ module.exports = _routes = {
 
                 return res.render('index', locals);
             });
-        });
-
-        app.get('/doci/*', function(req, res, next){
-            var dociUrl = req.path.replace('/doci', '');
-            var url = config.doci_url + dociUrl;
-
-            res.set('x-access-token', _routes.app.config.project.access_token);
-
-            return res.redirect(url);
-
-            //send with access token header
-            /*var req_data = {
-                method:  'GET',
-                url:     url,
-                headers: {'x-access-token': _routes.app.config.project.access_token}
-            };
-
-            request(req_data, function(err, res, body) {
-                if(err) return next(err);
-
-                return res.sendfile(body);
-            });*/
         });
 
         app.post('/stoptimelapse', function (req, res, next) {
