@@ -45,7 +45,7 @@
                         <div class="carousel-inner" role="listbox">
                             {{#documents}}
                                 <div class="item {{#is_first}}active{{/is_first}}">
-                                    <img src="{{public_thumbnail_url_large}}">
+                                    <img src="{{doci_redirect}}">
                                     <div class="carousel-caption">
                                         <p>{{cre_date_display}}</p>
                                     </div>

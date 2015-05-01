@@ -1,6 +1,7 @@
 var path = require('path');
 var async = require('async');
 var _ = require('underscore');
+var request = require('request');
 
 module.exports = _routes = {
     configure:function(app){
@@ -33,7 +34,7 @@ module.exports = _routes = {
     router: function(app) {
         app.get('/', function (req, res, next) {
 
-            //get the most recent documents
+            //get the most recent documents that are tagged with the rpi
             var uri = _routes.app.config.project.uri + '/docs';
             uri += '?tags_' + _routes.app.config.tag.name + '=' + _routes.app.config.tag.value;
             uri += '&page=1';
@@ -45,11 +46,20 @@ module.exports = _routes = {
             _routes.app.pv_client.get(uri, {}, function(err, _documents){
                 if (err) return next(err);
 
+                //add in the doci local for each document
+                // /doci/raw/:account/:project/docs/:document/revisions/:commit/page/:page
+                var dociHost = _routes.app.config.host ? _routes.app.config.host : _routes.app.config.domain;
+                _.each(_documents, function(document){
+                    document.doci_redirect = dociHost + document.last_binary_commit_uri + '/page/1';
+                });
+
+                //group the documents
                 var grouped_documents = [];
                 var temp_groups = _.groupBy(_documents, 'group_alias');
                 var group_aliases = _.keys(temp_groups);
                 var first = true;
 
+                //cycle through the groups
                 _.each(group_aliases, function(group_alias){
                     //everything should already be in the correct order
                     var group_name = group_alias.replace(/[=[\]{}()`*#~+!@%&?<>.,^$|\/\\\s]/g, "_");
@@ -79,6 +89,28 @@ module.exports = _routes = {
 
                 return res.render('index', locals);
             });
+        });
+
+        app.get('/doci/*', function(req, res, next){
+            var dociUrl = req.path.replace('/doci', '');
+            var url = config.doci_url + dociUrl;
+
+            res.set('x-access-token', _routes.app.config.project.access_token);
+
+            return res.redirect(url);
+
+            //send with access token header
+            /*var req_data = {
+                method:  'GET',
+                url:     url,
+                headers: {'x-access-token': _routes.app.config.project.access_token}
+            };
+
+            request(req_data, function(err, res, body) {
+                if(err) return next(err);
+
+                return res.sendfile(body);
+            });*/
         });
 
         app.post('/stoptimelapse', function (req, res, next) {

@@ -30,7 +30,12 @@ Some details about no-ip:
 http://raspberrypihelp.net/tutorials/29-raspberry-pi-no-ip-tutorial
 
 ======================================================================
+Some details about backing up and restoring sd cards
 
+https://ariandy1.wordpress.com/2013/04/07/raspberry-pi-backup-and-restore-from-linux/
+
+======================================================================
+Commands to run to set up a new RPi
 
 sudo apt-get update
 sudo apt-get upgrade
