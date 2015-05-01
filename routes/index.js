@@ -76,7 +76,8 @@ module.exports = _routes = {
 
                 var locals = {
                     grouped_documents: grouped_documents,
-                    project_name: 'AkitaBox Raspberry Pi Camera',
+                    project_name: _routes.app.config.project.name,
+                    project_url: _routes.app.config.project.project_url,
                     camera_tag: _routes.app.config.tag.name + ': ' +  _routes.app.config.tag.value
                 };
 
